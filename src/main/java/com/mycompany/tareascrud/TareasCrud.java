@@ -8,10 +8,14 @@ public class TareasCrud {
     public static void main(String[] args) {
         Controladora control = new Controladora();
         
-        Alumno alu = new Alumno(3, "Miguel", "Sanchez", new Date());
+        /*Alumno alu = new Alumno(3, "Miguel", "Sanchez", new Date());
         
         alu.setNombre("Rick");
         
-        control.editarAlumno(alu);
+        control.editarAlumno(alu);*/
+        
+        Alumno alu = control.traerAlumno(1);
+        
+        System.out.println("Alumno: " + alu.toString());
     }
 }

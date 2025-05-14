@@ -1,5 +1,6 @@
 package com.mycompany.tareascrud.logica;
 import com.mycompany.tareascrud.persistencia.controladoraPersistencia;
+import java.util.ArrayList;
 
 public class Controladora {
     controladoraPersistencia controlPersis = new controladoraPersistencia();
@@ -20,6 +21,10 @@ public class Controladora {
         return controlPersis.traerAlumno(id);
     }
     
+    public ArrayList<Alumno> traerListaAlumno(){
+        return controlPersis.traerListaAlumno();
+    }
+    
     public void crearTarea(Tarea tarea){
         controlPersis.crearTarea(tarea);
     }
@@ -32,4 +37,11 @@ public class Controladora {
         controlPersis.editarTarea(tarea);
     }
     
+    public Tarea traerTarea(int id){
+        return controlPersis.traerTarea(id);
+    }
+    
+    public ArrayList<Tarea> traerListaTarea(){
+        return controlPersis.traerListaTarea();
+    }
 }
