@@ -1,0 +1,12 @@
+com/mycompany/tareascrud/logica/Controladora.class
+com/mycompany/tareascrud/logica/Alumno.class
+com/mycompany/tareascrud/persistencia/TareaJpaController.class
+com/mycompany/tareascrud/persistencia/exceptions/PreexistingEntityException.class
+com/mycompany/tareascrud/persistencia/AlumnoJpaController.class
+com/mycompany/tareascrud/logica/Tarea_.class
+com/mycompany/tareascrud/logica/Tarea.class
+com/mycompany/tareascrud/persistencia/exceptions/IllegalOrphanException.class
+com/mycompany/tareascrud/TareasCrud.class
+com/mycompany/tareascrud/persistencia/exceptions/NonexistentEntityException.class
+com/mycompany/tareascrud/logica/Alumno_.class
+com/mycompany/tareascrud/persistencia/controladoraPersistencia.class
