@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -20,6 +21,9 @@ public class Tarea implements Serializable {
     private String descripcion;
     @Temporal(TemporalType.DATE)
     private Date fechaEntrega;
+    
+    @ManyToOne
+    private Alumno propietario;
 
     public Tarea() {
     }
@@ -62,6 +66,10 @@ public class Tarea implements Serializable {
     public void setFechaEntrega(Date fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Tarea{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", fechaEntrega=" + fechaEntrega + '}';
+    }
     
 }
