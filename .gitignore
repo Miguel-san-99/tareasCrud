@@ -26,3 +26,5 @@ Thumbs.db
 # Mac-specific
 Icon?
 
+#Persistencia
+src/main/resources/META-INF/persistence.xml
