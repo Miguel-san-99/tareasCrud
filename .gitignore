@@ -1,0 +1,28 @@
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Archivos generados por Maven
+target/
+
+# Archivos generados
+*.class
+*.log
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# IDEs
+*.iml
+.idea/
+*.ipr
+*.iws
+
+# Mac-specific
+Icon?
+
