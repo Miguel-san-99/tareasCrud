@@ -28,11 +28,20 @@ public class Tarea implements Serializable {
     public Tarea() {
     }
 
-    public Tarea(int id, String nombre, String descripcion, Date fechaEntrega) {
+    public Tarea(int id, String nombre, String descripcion, Date fechaEntrega, Alumno propietario) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaEntrega = fechaEntrega;
+        this.propietario = propietario;
+    }
+
+    public Alumno getPropietario() {
+        return propietario;
+    }
+
+    public void setPropietario(Alumno propietario) {
+        this.propietario = propietario;
     }
 
     public int getId() {

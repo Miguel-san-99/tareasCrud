@@ -11,19 +11,24 @@ public class TareasCrud {
         
         Controladora control = new Controladora();
         
-        Tarea tarea1 = new Tarea(1, "Proyecto final", "Realizar proyecto final", new Date());
-        Tarea tarea2 = new Tarea(2, "Tarea 1", "Realizar tarea 1", new Date());
+        ArrayList<Tarea> listaTareas = new ArrayList();
+        Alumno alu = new Alumno(6, "Miguel", "Sanchez", new Date(), listaTareas);
+        control.crearAlumno(alu);
+        
+        Tarea tarea1 = new Tarea(3, "Proyecto final", "Realizar proyecto final", new Date(), alu);
+        Tarea tarea2 = new Tarea(4, "Tarea 1", "Realizar tarea 1", new Date(), alu);
         
         control.crearTarea(tarea1);
         control.crearTarea(tarea2);
-        
-        ArrayList<Tarea> listaTareas = new ArrayList();
+            
         listaTareas.add(tarea1);
         listaTareas.add(tarea2);
         
+        alu.setListaTareas(listaTareas);
+        control.editarAlumno(alu);
         
-        Alumno alu = new Alumno(5, "Miguel", "Sanchez", new Date(), listaTareas);
-        control.crearAlumno(alu);
+        
+        
         
         /*alu.setNombre("Rick");
         
