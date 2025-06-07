@@ -1,8 +1,8 @@
 package com.mycompany.tareascrud.logica;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,12 +24,12 @@ public class Alumno implements Serializable {
     private Date fechaNac;
     
     @OneToMany (mappedBy="propietario")
-    private ArrayList<Tarea> listaTareas;
+    private List<Tarea> listaTareas;
     
     public Alumno() {
     }
 
-    public Alumno(int id, String nombre, String apellido, Date fechaNac, ArrayList<Tarea> listaTareas) {
+    public Alumno(int id, String nombre, String apellido, Date fechaNac, List<Tarea> listaTareas) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -69,11 +69,11 @@ public class Alumno implements Serializable {
         this.fechaNac = fechaNac;
     }
 
-    public ArrayList<Tarea> getListaTareas() {
+    public List<Tarea> getListaTareas() {
         return listaTareas;
     }
 
-    public void setListaTareas(ArrayList<Tarea> listaTareas) {
+    public void setListaTareas(List<Tarea> listaTareas) {
         this.listaTareas = listaTareas;
     }
 

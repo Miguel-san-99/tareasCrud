@@ -1,14 +1,21 @@
 package com.mycompany.tareascrud;
+import com.mycompany.tareascrud.gui.Principal;
 import com.mycompany.tareascrud.logica.Alumno;
 import com.mycompany.tareascrud.logica.Controladora;
 import com.mycompany.tareascrud.logica.Tarea;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class TareasCrud {
 
     public static void main(String[] args) {
         
+        Principal pantallaPrincipal = new Principal();
+        pantallaPrincipal.setVisible(true);
+        pantallaPrincipal.setLocationRelativeTo(null);
+        
+        /*
         Controladora control = new Controladora();
         
         ArrayList<Tarea> listaTareas = new ArrayList();
@@ -26,7 +33,7 @@ public class TareasCrud {
         
         alu.setListaTareas(listaTareas);
         control.editarAlumno(alu);
-        
+        */
         
         
         
