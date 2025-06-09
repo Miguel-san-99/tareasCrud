@@ -125,7 +125,13 @@ public class RegistrarAlumno extends javax.swing.JFrame {
         alu.setApellido(txtApellido.getText());
         alu.setFechaNac(dcFechaNac.getDate());
         
-        control.crearAlumno(alu);
+        try{
+            control.crearAlumno(alu);
+            JOptionPane.showMessageDialog(this, "Alumno guardado correctamente.", "Exito", JOptionPane.INFORMATION_MESSAGE);
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Error al guardar el alumno: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
 
