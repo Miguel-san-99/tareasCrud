@@ -236,7 +236,7 @@ public class RegistrarTarea extends javax.swing.JFrame {
         tarea.setNombre(txtId.getText());
         tarea.setDescripcion(txtDescripcion.getText());
         tarea.setFechaEntrega(dcFechaEntrega.getDate());
-        tarea.setPropietario(listaAlumnos.getFirst());
+        tarea.setPropietario(listaAlumnos.get(0));
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

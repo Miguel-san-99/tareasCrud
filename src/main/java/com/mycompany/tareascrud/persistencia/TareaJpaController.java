@@ -4,21 +4,22 @@
  */
 package com.mycompany.tareascrud.persistencia;
 
+import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import com.mycompany.tareascrud.logica.Alumno;
 import com.mycompany.tareascrud.logica.Tarea;
 import com.mycompany.tareascrud.persistencia.exceptions.NonexistentEntityException;
-import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 /**
  *
- * @author sanchezmagana
+ * @author marth
  */
 public class TareaJpaController implements Serializable {
 
@@ -29,7 +30,6 @@ public class TareaJpaController implements Serializable {
     public TareaJpaController(){
         emf = Persistence.createEntityManagerFactory("tareasCrudJPA");
     }
-    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -41,7 +41,16 @@ public class TareaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Alumno propietario = tarea.getPropietario();
+            if (propietario != null) {
+                propietario = em.getReference(propietario.getClass(), propietario.getId());
+                tarea.setPropietario(propietario);
+            }
             em.persist(tarea);
+            if (propietario != null) {
+                propietario.getListaTareas().add(tarea);
+                propietario = em.merge(propietario);
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -55,7 +64,22 @@ public class TareaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Tarea persistentTarea = em.find(Tarea.class, tarea.getId());
+            Alumno propietarioOld = persistentTarea.getPropietario();
+            Alumno propietarioNew = tarea.getPropietario();
+            if (propietarioNew != null) {
+                propietarioNew = em.getReference(propietarioNew.getClass(), propietarioNew.getId());
+                tarea.setPropietario(propietarioNew);
+            }
             tarea = em.merge(tarea);
+            if (propietarioOld != null && !propietarioOld.equals(propietarioNew)) {
+                propietarioOld.getListaTareas().remove(tarea);
+                propietarioOld = em.merge(propietarioOld);
+            }
+            if (propietarioNew != null && !propietarioNew.equals(propietarioOld)) {
+                propietarioNew.getListaTareas().add(tarea);
+                propietarioNew = em.merge(propietarioNew);
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -84,6 +108,11 @@ public class TareaJpaController implements Serializable {
                 tarea.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The tarea with id " + id + " no longer exists.", enfe);
+            }
+            Alumno propietario = tarea.getPropietario();
+            if (propietario != null) {
+                propietario.getListaTareas().remove(tarea);
+                propietario = em.merge(propietario);
             }
             em.remove(tarea);
             em.getTransaction().commit();

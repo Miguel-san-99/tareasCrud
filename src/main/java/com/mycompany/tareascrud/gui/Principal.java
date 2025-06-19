@@ -1,5 +1,4 @@
-package com.mycompany.tareascrud.gui;
-import com.mycompany.tareascrud.gui.RegistrarAlumno;
+    package com.mycompany.tareascrud.gui;
 
 public class Principal extends javax.swing.JFrame {
     
