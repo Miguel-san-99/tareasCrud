@@ -2,11 +2,13 @@ package com.mycompany.tareascrud.logica;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,16 +26,20 @@ public class Tarea implements Serializable {
     
     @ManyToOne
     private Alumno propietario;
+    
+    @ManyToMany(mappedBy="listaTareasParticipa")
+    private List<Alumno> participantes;
 
     public Tarea() {
     }
 
-    public Tarea(int id, String nombre, String descripcion, Date fechaEntrega, Alumno propietario) {
+    public Tarea(int id, String nombre, String descripcion, Date fechaEntrega, Alumno propietario, List<Alumno> participantes) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaEntrega = fechaEntrega;
         this.propietario = propietario;
+        this.participantes = participantes;
     }
 
     public Alumno getPropietario() {
@@ -74,6 +80,14 @@ public class Tarea implements Serializable {
 
     public void setFechaEntrega(Date fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
+    }
+
+    public List<Alumno> getParticipantes() {
+        return participantes;
+    }
+
+    public void setParticipantes(List<Alumno> participantes) {
+        this.participantes = participantes;
     }
 
     @Override

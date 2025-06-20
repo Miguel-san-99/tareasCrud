@@ -3,7 +3,9 @@ import com.mycompany.tareascrud.logica.Alumno;
 import com.mycompany.tareascrud.logica.Controladora;
 import com.mycompany.tareascrud.logica.Tarea;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class RegistrarTarea extends javax.swing.JFrame {
@@ -40,12 +42,12 @@ public class RegistrarTarea extends javax.swing.JFrame {
         txtDescripcion = new javax.swing.JTextArea();
         dcFechaEntrega = new com.toedter.calendar.JDateChooser();
         cbxParticipantes = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
         btnAgregarParticipante = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaParticipantes = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
-        txtNombreTarea1 = new javax.swing.JTextField();
+        txtNombreTarea = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -85,10 +87,10 @@ public class RegistrarTarea extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Guardar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
 
@@ -112,9 +114,9 @@ public class RegistrarTarea extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel6.setText("Id");
 
-        txtNombreTarea1.addActionListener(new java.awt.event.ActionListener() {
+        txtNombreTarea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreTarea1ActionPerformed(evt);
+                txtNombreTareaActionPerformed(evt);
             }
         });
 
@@ -155,9 +157,9 @@ public class RegistrarTarea extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(153, 153, 153)
-                                .addComponent(jButton1))
+                                .addComponent(btnGuardar))
                             .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombreTarea1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNombreTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 91, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -166,7 +168,7 @@ public class RegistrarTarea extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jButton1))
+                    .addComponent(btnGuardar))
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -174,7 +176,7 @@ public class RegistrarTarea extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtNombreTarea1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombreTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -230,26 +232,37 @@ public class RegistrarTarea extends javax.swing.JFrame {
         cargarTabla();
     }//GEN-LAST:event_formWindowOpened
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         Tarea tarea = new Tarea();
+        List<Alumno> participantes = new ArrayList();
         tarea.setId(Integer.parseInt(txtId.getText()));
-        tarea.setNombre(txtId.getText());
+        tarea.setNombre(txtNombreTarea.getText());
         tarea.setDescripcion(txtDescripcion.getText());
         tarea.setFechaEntrega(dcFechaEntrega.getDate());
         tarea.setPropietario(listaAlumnos.get(0));
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+        for(int i = 0; i < tableModel.getRowCount(); i++){
+            participantes.add(control.traerAlumno((int) tableModel.getValueAt(i, 0)));
+        }
+        tarea.setParticipantes(participantes);
+        try{
+            control.crearTarea(tarea);
+            JOptionPane.showMessageDialog(this, "Tarea guardada correctamente.", "Exito", JOptionPane.INFORMATION_MESSAGE);
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Error al guardar la tarea: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void txtNombreTarea1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreTarea1ActionPerformed
+    private void txtNombreTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreTareaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreTarea1ActionPerformed
+    }//GEN-LAST:event_txtNombreTareaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarParticipante;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> cbxParticipantes;
     private com.toedter.calendar.JDateChooser dcFechaEntrega;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -262,7 +275,7 @@ public class RegistrarTarea extends javax.swing.JFrame {
     private javax.swing.JTable tablaParticipantes;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtNombreTarea1;
+    private javax.swing.JTextField txtNombreTarea;
     // End of variables declaration//GEN-END:variables
 
     private void cargarListaAlumnos() {

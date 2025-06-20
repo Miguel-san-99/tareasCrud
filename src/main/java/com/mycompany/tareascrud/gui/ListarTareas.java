@@ -1,8 +1,10 @@
 package com.mycompany.tareascrud.gui;
 
+import com.mycompany.tareascrud.logica.Alumno;
 import com.mycompany.tareascrud.logica.Controladora;
 import com.mycompany.tareascrud.logica.Tarea;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
@@ -140,7 +142,7 @@ public class ListarTareas extends javax.swing.JFrame {
             }
         };
         //Establecemos los nombres de las columnas
-        String titulos[] = {"Id", "Nombre", "Descripcion", "Fecha de entrega", "Propietario"};
+        String titulos[] = {"Id", "Nombre", "Descripcion", "Fecha de entrega", "Propietario", "Participantes"};
         tabla.setColumnIdentifiers(titulos);
         
         //Cargamos la lista a la tabla
@@ -148,7 +150,16 @@ public class ListarTareas extends javax.swing.JFrame {
         
         if (listaTareas != null){
             for (Tarea tarea : listaTareas){
-                Object[] objeto = {tarea.getId(), tarea.getNombre(), tarea.getDescripcion(), tarea.getFechaEntrega(), tarea.getPropietario().getNombre()};
+                List<String> alumnos = new ArrayList();
+                if(listaTareas.isEmpty()){
+                    alumnos.add("Empty");
+                }
+                else{
+                    for(Alumno alu : tarea.getParticipantes()){
+                        alumnos.add(alu.getNombre());
+                    }
+                }
+                Object[] objeto = {tarea.getId(), tarea.getNombre(), tarea.getDescripcion(), tarea.getFechaEntrega(), tarea.getPropietario().getNombre(), alumnos};
                 tabla.addRow(objeto);
             }
         }

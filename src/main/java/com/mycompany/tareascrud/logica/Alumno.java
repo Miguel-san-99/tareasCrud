@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,15 +27,19 @@ public class Alumno implements Serializable {
     @OneToMany (mappedBy="propietario")
     private List<Tarea> listaTareas;
     
+    @ManyToMany
+    private List<Tarea> listaTareasParticipa;
+    
     public Alumno() {
     }
 
-    public Alumno(int id, String nombre, String apellido, Date fechaNac, List<Tarea> listaTareas) {
+    public Alumno(int id, String nombre, String apellido, Date fechaNac, List<Tarea> listaTareas, List<Tarea> listaTareasParticipa) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaNac = fechaNac;
         this.listaTareas = listaTareas;
+        this.listaTareasParticipa = listaTareasParticipa;
     }
 
     public int getId() {
@@ -77,6 +82,14 @@ public class Alumno implements Serializable {
         this.listaTareas = listaTareas;
     }
 
+    public List<Tarea> getListaTareasParticipa() {
+        return listaTareasParticipa;
+    }
+
+    public void setListaTareasParticipa(List<Tarea> listaTareasParticipa) {
+        this.listaTareasParticipa = listaTareasParticipa;
+    }
+    
     @Override
     public String toString() {
         return "Alumno{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNac=" + fechaNac + '}';

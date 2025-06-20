@@ -12,6 +12,7 @@ import javax.persistence.criteria.Root;
 import com.mycompany.tareascrud.logica.Alumno;
 import com.mycompany.tareascrud.logica.Tarea;
 import com.mycompany.tareascrud.persistencia.exceptions.NonexistentEntityException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -30,6 +31,7 @@ public class TareaJpaController implements Serializable {
     public TareaJpaController(){
         emf = Persistence.createEntityManagerFactory("tareasCrudJPA");
     }
+    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -37,6 +39,9 @@ public class TareaJpaController implements Serializable {
     }
 
     public void create(Tarea tarea) {
+        if (tarea.getParticipantes() == null) {
+            tarea.setParticipantes(new ArrayList<Alumno>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -46,10 +51,20 @@ public class TareaJpaController implements Serializable {
                 propietario = em.getReference(propietario.getClass(), propietario.getId());
                 tarea.setPropietario(propietario);
             }
+            List<Alumno> attachedParticipantes = new ArrayList<Alumno>();
+            for (Alumno participantesAlumnoToAttach : tarea.getParticipantes()) {
+                participantesAlumnoToAttach = em.getReference(participantesAlumnoToAttach.getClass(), participantesAlumnoToAttach.getId());
+                attachedParticipantes.add(participantesAlumnoToAttach);
+            }
+            tarea.setParticipantes(attachedParticipantes);
             em.persist(tarea);
             if (propietario != null) {
                 propietario.getListaTareas().add(tarea);
                 propietario = em.merge(propietario);
+            }
+            for (Alumno participantesAlumno : tarea.getParticipantes()) {
+                participantesAlumno.getListaTareasParticipa().add(tarea);
+                participantesAlumno = em.merge(participantesAlumno);
             }
             em.getTransaction().commit();
         } finally {
@@ -67,10 +82,19 @@ public class TareaJpaController implements Serializable {
             Tarea persistentTarea = em.find(Tarea.class, tarea.getId());
             Alumno propietarioOld = persistentTarea.getPropietario();
             Alumno propietarioNew = tarea.getPropietario();
+            List<Alumno> participantesOld = persistentTarea.getParticipantes();
+            List<Alumno> participantesNew = tarea.getParticipantes();
             if (propietarioNew != null) {
                 propietarioNew = em.getReference(propietarioNew.getClass(), propietarioNew.getId());
                 tarea.setPropietario(propietarioNew);
             }
+            List<Alumno> attachedParticipantesNew = new ArrayList<Alumno>();
+            for (Alumno participantesNewAlumnoToAttach : participantesNew) {
+                participantesNewAlumnoToAttach = em.getReference(participantesNewAlumnoToAttach.getClass(), participantesNewAlumnoToAttach.getId());
+                attachedParticipantesNew.add(participantesNewAlumnoToAttach);
+            }
+            participantesNew = attachedParticipantesNew;
+            tarea.setParticipantes(participantesNew);
             tarea = em.merge(tarea);
             if (propietarioOld != null && !propietarioOld.equals(propietarioNew)) {
                 propietarioOld.getListaTareas().remove(tarea);
@@ -79,6 +103,18 @@ public class TareaJpaController implements Serializable {
             if (propietarioNew != null && !propietarioNew.equals(propietarioOld)) {
                 propietarioNew.getListaTareas().add(tarea);
                 propietarioNew = em.merge(propietarioNew);
+            }
+            for (Alumno participantesOldAlumno : participantesOld) {
+                if (!participantesNew.contains(participantesOldAlumno)) {
+                    participantesOldAlumno.getListaTareasParticipa().remove(tarea);
+                    participantesOldAlumno = em.merge(participantesOldAlumno);
+                }
+            }
+            for (Alumno participantesNewAlumno : participantesNew) {
+                if (!participantesOld.contains(participantesNewAlumno)) {
+                    participantesNewAlumno.getListaTareasParticipa().add(tarea);
+                    participantesNewAlumno = em.merge(participantesNewAlumno);
+                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -113,6 +149,11 @@ public class TareaJpaController implements Serializable {
             if (propietario != null) {
                 propietario.getListaTareas().remove(tarea);
                 propietario = em.merge(propietario);
+            }
+            List<Alumno> participantes = tarea.getParticipantes();
+            for (Alumno participantesAlumno : participantes) {
+                participantesAlumno.getListaTareasParticipa().remove(tarea);
+                participantesAlumno = em.merge(participantesAlumno);
             }
             em.remove(tarea);
             em.getTransaction().commit();
