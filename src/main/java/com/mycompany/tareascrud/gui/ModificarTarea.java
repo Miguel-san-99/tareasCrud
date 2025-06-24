@@ -20,12 +20,6 @@ public class ModificarTarea extends javax.swing.JFrame {
         this.numTarea = numTarea;
         control = new Controladora();
         listaAlumnos = control.traerListaAlumno();
-        tableModel = new DefaultTableModel(){
-            @Override
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
-        };
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
@@ -292,6 +286,12 @@ public class ModificarTarea extends javax.swing.JFrame {
     }
     
     private void cargarTabla() {
+        tableModel = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
         String titulos[] = {"Id", "Nombre", "Apellido"};
         
         tableModel.setColumnIdentifiers(titulos);

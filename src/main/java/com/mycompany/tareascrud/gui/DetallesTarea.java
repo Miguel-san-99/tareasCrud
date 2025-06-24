@@ -31,6 +31,7 @@ public class DetallesTarea extends javax.swing.JFrame {
         labelFechaEntrega = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaArchivos = new javax.swing.JTable();
+        btnEditarTarea = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,6 +64,13 @@ public class DetallesTarea extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tablaArchivos);
 
+        btnEditarTarea.setText("Editar tarea");
+        btnEditarTarea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarTareaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -70,14 +78,18 @@ public class DetallesTarea extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(brnSeleccionarArchivo)
                     .addComponent(labelDescripcion)
                     .addComponent(labelTitulo)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(labelPropietario)
-                        .addGap(83, 83, 83)
-                        .addComponent(labelFechaEntrega))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(brnSeleccionarArchivo)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnEditarTarea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(labelPropietario)
+                            .addGap(83, 83, 83)
+                            .addComponent(labelFechaEntrega))))
                 .addContainerGap(57, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -92,7 +104,9 @@ public class DetallesTarea extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(labelDescripcion)
                 .addGap(18, 18, 18)
-                .addComponent(brnSeleccionarArchivo)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(brnSeleccionarArchivo)
+                    .addComponent(btnEditarTarea))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                 .addContainerGap())
@@ -117,9 +131,16 @@ public class DetallesTarea extends javax.swing.JFrame {
         archivo.showOpenDialog(this);
     }//GEN-LAST:event_brnSeleccionarArchivoActionPerformed
 
+    private void btnEditarTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarTareaActionPerformed
+        ModificarTarea pantalla = new ModificarTarea(numTarea);
+        pantalla.setVisible(true);
+        pantalla.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnEditarTareaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton brnSeleccionarArchivo;
+    private javax.swing.JButton btnEditarTarea;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelDescripcion;

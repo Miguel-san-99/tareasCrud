@@ -25,7 +25,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel1.setText("Administrador tareas");
         jLabel1.setName(""); // NOI18N
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\marth\\Downloads\\task-list.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/task-list.png"))); // NOI18N
         jLabel2.setText("jLabel2");
 
         btnListarTareas.setText("Listar tareas");
