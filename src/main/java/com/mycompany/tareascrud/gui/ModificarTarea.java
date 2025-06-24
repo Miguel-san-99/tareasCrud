@@ -73,6 +73,7 @@ public class ModificarTarea extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Fecha de entrega");
 
+        txtId.setEditable(false);
         txtId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIdActionPerformed(evt);
@@ -249,11 +250,12 @@ public class ModificarTarea extends javax.swing.JFrame {
         }
         tarea.setParticipantes(participantes);
         try{
-            control.crearTarea(tarea);
-            JOptionPane.showMessageDialog(this, "Tarea guardada correctamente.", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            control.editarTarea(tarea);
+            JOptionPane.showMessageDialog(this, "Tarea actualizada correctamente.", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
         }
         catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Error al guardar la tarea: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al actualizar la tarea: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 

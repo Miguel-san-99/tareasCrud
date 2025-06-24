@@ -4,7 +4,6 @@ import com.mycompany.tareascrud.logica.Alumno;
 import com.mycompany.tareascrud.logica.Controladora;
 import com.mycompany.tareascrud.logica.Tarea;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -161,7 +160,7 @@ public class ListarTareas extends javax.swing.JFrame {
         if (tablaTareas.getRowCount() > 0){
             if (tablaTareas.getSelectedRow() != -1){
                 int numTarea = (int) (tablaTareas.getValueAt(tablaTareas.getSelectedRow(), 0));
-                ModificarTarea pantalla = new ModificarTarea(numTarea);
+                DetallesTarea pantalla = new DetallesTarea(numTarea);
                 pantalla.setVisible(true);
                 pantalla.setLocationRelativeTo(null);
             }
@@ -204,13 +203,13 @@ public class ListarTareas extends javax.swing.JFrame {
         
         if (listaTareas != null){
             for (Tarea tarea : listaTareas){
-                List<String> alumnos = new ArrayList();
-                if(listaTareas.isEmpty()){
-                    alumnos.add("Empty");
+                String alumnos = "";
+                if(tarea.getParticipantes().isEmpty()){
+                    alumnos = "Sin participantes";
                 }
                 else{
                     for(Alumno alu : tarea.getParticipantes()){
-                        alumnos.add(alu.getNombre());
+                        alumnos +=  ", " + alu.getNombre();
                     }
                 }
                 Object[] objeto = {tarea.getId(), tarea.getNombre(), tarea.getDescripcion(), tarea.getFechaEntrega(), tarea.getPropietario().getNombre(), alumnos};
